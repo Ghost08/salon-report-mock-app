@@ -9,7 +9,7 @@ import {Subject, Observable} from 'rxjs';
 export class ReportComponent implements OnInit {
   private width: number;
   private height: number;
-
+  private imgDescription:string;
   // latest snapshot
   public webcamImage: WebcamImage = null;
 
@@ -17,19 +17,15 @@ export class ReportComponent implements OnInit {
   private trigger: Subject<void> = new Subject<void>();
   
   constructor() {
-    this.onResize();
+    this.height=300;
+    this.width=500;
   }
 
   showWebcam: boolean = false;
 
   ngOnInit(): void {}
 
-  onResize(event?: Event) {
-    const win = !!event ? (event.target as Window) : window;
-    this.width = win.innerWidth;
-    this.height = win.innerHeight;
-  }
-
+  
   public handleInitError(error: WebcamInitError): void {
     if (
       error.mediaStreamError &&
@@ -54,5 +50,10 @@ export class ReportComponent implements OnInit {
   }
   public get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
+  }
+
+
+  public sendReport(){
+    console.log('email sent !!')
   }
 }
