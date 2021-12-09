@@ -1,7 +1,8 @@
 .wrapper {
     display: flex;
     background: #383838;
-    height: 100vh;
+    
+    height: 60vh;
     align-items: center;
     justify-content: center;  
     overflow: hidden;

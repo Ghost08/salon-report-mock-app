@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8 offset-md-2">
+  <div class="col-md-6 offset-md-3">
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button
@@ -37,7 +37,7 @@
       >
         <div class="card">
           <div class="card-body">
-            <div class="wrapper" (window:resize)="onResize($event)">
+            <div class="wrapper">
               <webcam
                 [width]="width"
                 [height]="height"
@@ -71,9 +71,20 @@
         aria-labelledby="nav-snapshot-tab"
       >
         <div class="card">
-          <div class="card-body">
-            <div class="snapshot" *ngIf="webcamImage">
-              <img [src]="webcamImage.imageAsDataUrl" width="500" height="300"/>
+          <div class="card-body" *ngIf="webcamImage">
+            <div class="wrapper" >
+              <img
+                [src]="webcamImage.imageAsDataUrl"
+                width="500"
+                height="300"
+              />
+            </div>
+            <div class="card-footer">
+              <div class="mb-1">
+                <label for="imgDesc" class="form-label">Description</label>
+                <textarea class="form-control mb-1" id="imgDesc" [(ngModel)]="imgDescription" rows="2"></textarea>
+                <button class="btn btn-sm btn-primary" type="button" (click)="sendReport()">Send report</button>
+              </div>
             </div>
           </div>
         </div>
