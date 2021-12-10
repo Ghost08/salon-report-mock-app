@@ -9,6 +9,10 @@ const routes: Routes = [
     component:ReportComponent
   },
   {
+    path:'report/:id',
+    component:ReportComponent
+  },
+  {
     path:'',
     component:HomeComponent,
     pathMatch:'full'

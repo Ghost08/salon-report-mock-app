@@ -8,6 +8,7 @@ import { ReportComponent } from './report/report.component';
 import { HomeComponent } from './home/home.component';
 
 import { WebcamModule} from 'ngx-webcam';
+import { UtilsModule } from './utils/utils.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { WebcamModule} from 'ngx-webcam';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    WebcamModule
+    WebcamModule,
+    UtilsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

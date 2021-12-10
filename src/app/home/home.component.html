@@ -1,2 +1,20 @@
+<a class="btn btn-sm btn-primary" [routerLink]="['/report']">Create report</a>
 
-<a class="btn btn-primary" [routerLink]="['/report']"  >Create report</a>
+<h6 class="text-center">Sample reports</h6>
+<div class="table-responsive mt-1">
+  <table class="table table-striped caption-top">    
+    <thead >
+      <th>Report Id</th>
+      <th>Created By</th>
+      <th>Created Date</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of reports">
+        <td><a [routerLink]="['/report',item.id ]">{{ item.id }}</a> </td>
+        <td>{{ item.createdBy }}</td>
+        <td>{{ item.createdDate | date }}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+</div>

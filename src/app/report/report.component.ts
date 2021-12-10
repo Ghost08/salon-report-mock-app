@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WebcamInitError, WebcamImage } from 'ngx-webcam';
 import { Subject, Observable } from 'rxjs';
+import { UtilsModule } from '../utils/utils.module';
+import { ActivatedRoute } from '@angular/router';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -12,6 +14,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit {
+  reportId: string ="";
   private width: number;
   private height: number;
   private imgDescription: string;
@@ -21,14 +24,23 @@ export class ReportComponent implements OnInit {
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
 
-  constructor() {
+  isNewReport: boolean = true;
+
+  constructor(private utility: UtilsModule, private route: ActivatedRoute) {
     this.height = 300;
     this.width = 500;
   }
 
   showWebcam: boolean = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.params.subscribe((f) => {
+      this.reportId = f['id'];
+      if (this.reportId) {
+        this.isNewReport = false;
+      }
+    });
+  }
 
   public handleInitError(error: WebcamInitError): void {
     if (
@@ -49,7 +61,7 @@ export class ReportComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
+    // console.info('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
   }
   public get triggerObservable(): Observable<void> {
@@ -71,24 +83,24 @@ export class ReportComponent implements OnInit {
 
       var dataURL = canvas.toDataURL('image/png');
 
-      console.log(dataURL);
-
       let docDefinition = {
         header: 'Sample Report',
         content: [
           {
-            text: this.imgDescription,
-            fontSize: 20,
+            image: dataURL,
           },
           {
-            image: dataURL,
+            text: this.imgDescription,
+            fontSize: 20,
           },
         ],
       };
 
-      pdfMake.createPdf(docDefinition).download();
-    }else{
-      console.warn("image description required");
+      pdfMake
+        .createPdf(docDefinition)
+        .download(`${this.utility.getUniqueId()}.pdf`);
+    } else {
+      console.warn('image description required');
     }
   }
 }
