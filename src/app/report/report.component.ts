@@ -86,7 +86,7 @@ export class ReportComponent implements OnInit {
         ],
       };
 
-      pdfMake.createPdf(docDefinition).open();
+      pdfMake.createPdf(docDefinition).download();
     }else{
       console.warn("image description required");
     }
